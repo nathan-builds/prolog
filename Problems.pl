@@ -13,4 +13,11 @@ only_odd_digits(N):-
      only_odd_digits(Next).
  *******************************************************
  
- 
+ %base
+riffle([],[],[],_):-!.
+
+%first from left, second right
+riffle([First|Left],[Second|Right],[First,Second|Result],left):-riffle(Left,Right,Result,left).
+%second left, first right
+riffle([Second|Left],[First|Right],[First,Second|Result],right):-riffle(Left,Right,Result,right).
+    
