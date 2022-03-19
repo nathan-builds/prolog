@@ -21,3 +21,15 @@ riffle([First|Left],[Second|Right],[First,Second|Result],left):-riffle(Left,Righ
 %second left, first right
 riffle([Second|Left],[First|Right],[First,Second|Result],right):-riffle(Left,Right,Result,right).
     
+
+ *******************************************************
+
+first_missing_positive(List,Num):-
+    first_missing_positive(List,Num,1).
+
+first_missing_positive(L,F,F):-
+    not(member(F,L)),!.
+first_missing_positive(L,N,F):-
+    F1 is F+1,
+    first_missing_positive(L,N,F1).
+
