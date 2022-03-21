@@ -33,3 +33,21 @@ first_missing_positive(L,N,F):-
     F1 is F+1,
     first_missing_positive(L,N,F1).
 
+
+
+ *******************************************************
+% if it fails this, it will do other, amount is greater so the coin 
+%satisfies the initial condition
+give_change(Amount, [H|T], [H|C1]):-
+Amount >= H, 
+AmountLeft is Amount - H,
+give_change(AmountLeft, [H|T], C1).
+
+% this succeeds it means we move to the next coin
+give_change(AmountLeft, [H|T], ChangeLeft):-
+AmountLeft < H, 
+give_change(AmountLeft, T,ChangeLeft).
+  	
+% unify the end result
+give_change(0, _, []):-
+    _ = [].
