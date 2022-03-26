@@ -51,3 +51,30 @@ give_change(AmountLeft, T,ChangeLeft).
 % unify the end result
 give_change(0, _, []):-
     _ = [].
+    
+    
+    
+    
+ *******************************************************    
+    
+count_dominators([], Answer):-
+    Answer is 0,
+    !.
+
+count_dominators(NumList, Answer):-
+    length(NumList, 1),
+    Answer is 1, 
+    !.
+
+count_dominators(NumList, Answer):-
+    reverse(NumList, RevNumList),
+    dominator_helper_function(RevNumList, 0, 0, Answer).
+
+dominator_helper_function([], _, C, Answer):-
+    Answer is C, 
+    !.
+
+dominator_helper_function([H | T], Max, Count, Answer):-
+    ( H > Max ->  
+    NewCount = Count + 1, dominator_helper_function(T, H, NewCount, Answer) ;
+    dominator_helper_function(T, Max, Count, Answer)).
