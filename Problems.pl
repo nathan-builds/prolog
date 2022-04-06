@@ -78,3 +78,34 @@ dominator_helper_function([H | T], Max, Count, Answer):-
     ( H > Max ->  
     NewCount = Count + 1, dominator_helper_function(T, H, NewCount, Answer) ;
     dominator_helper_function(T, Max, Count, Answer)).
+
+
+********************************************************************************
+extract_increasing(DigitString, Nums):-
+    string_chars(DigitString, DigitList), 
+    [Num1, Num2| T] = DigitList, 
+    atom_number(Num1, Num1Number),
+    atom_number(Num2, Num2Number),
+    extract_helper(Num1Number, Num2Number, T, [Num1Number], Nums).
+
+
+extract_helper(Num1, Num2, DigitList, Collector, Nums):-
+    [Next | T] = DigitList,
+        string_concat(Num2, Next, NewNext),
+    atom_number(NewNext, NextInt),
+    extract_helper(Num1, NextInt, T, Collector, Nums).
+
+extract_helper(Num1, Num2, DigitList, Collector, Nums):-
+    Num1 < Num2,
+    append([Num2], Collector, NewCollector),
+    [Next | T] = DigitList,
+    atom_number(Next, NextInt),
+    extract_helper(Num2, NextInt, T, NewCollector, Nums), !.
+  
+
+extract_helper(Num1, Num2, [], Collector, Nums):-
+    ( Num1 < Num2 ->  
+    append([Num2], Collector, NewCollector), reverse(NewCollector, Nums) ; reverse(Collector, Nums) ),
+    !.
+
+    
