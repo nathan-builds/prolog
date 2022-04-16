@@ -32,6 +32,17 @@ first_missing_positive(L,F,F):-
 first_missing_positive(L,N,F):-
     F1 is F+1,
     first_missing_positive(L,N,F1).
+    
+    
+    
+*********************************************************
+domino_cycle([(C,D)|T]):-
+cycle_helper_function(T,D,_,C).
+domino_cycle([(A,A)]).
+
+cycle_helper_function([(Start,X)], _, Start, X).
+cycle_helper_function([(Start,End)|Tail], Start, End, X):-
+cycle_helper_function(Tail, End, _, X).
 
 
 
